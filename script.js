@@ -2,10 +2,9 @@ const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 const startButton = document.getElementById("startButton");
 
-
 // Responsive canvas size
-canvas.width = 360;
-canvas.height = 310;
+canvas.width = 400;
+canvas.height = 400;
 
 // Game variables
 const boxSize = 20;
@@ -79,13 +78,11 @@ function updateSnake() {
         head.y >= canvas.height ||
         snake.slice(1).some(segment => segment.x === head.x && segment.y === head.y)
     ) {
-        clearInterval(gameInterval);
-        alert(`Game Over! Your score: ${score}`);
-        location.reload();
+        handleGameOver(); // Panggil fungsi Game Over
     }
 }
 
-// Handle input
+// Handle input (keyboard for desktop and touch for mobile)
 document.addEventListener("keydown", (e) => {
     if (e.key === "ArrowUp" && direction !== "DOWN") direction = "UP";
     if (e.key === "ArrowDown" && direction !== "UP") direction = "DOWN";
@@ -93,18 +90,23 @@ document.addEventListener("keydown", (e) => {
     if (e.key === "ArrowRight" && direction !== "LEFT") direction = "RIGHT";
 });
 
-// Touch controls
-document.getElementById("up").addEventListener("click", () => {
-    if (direction !== "DOWN") direction = "UP";
-});
-document.getElementById("down").addEventListener("click", () => {
-    if (direction !== "UP") direction = "DOWN";
-});
-document.getElementById("left").addEventListener("click", () => {
-    if (direction !== "RIGHT") direction = "LEFT";
-});
-document.getElementById("right").addEventListener("click", () => {
-    if (direction !== "LEFT") direction = "RIGHT";
+// Touch events for mobile controls
+canvas.addEventListener("touchstart", (e) => {
+    const touch = e.touches[0];
+    const canvasRect = canvas.getBoundingClientRect();
+    const x = touch.clientX - canvasRect.left;
+    const y = touch.clientY - canvasRect.top;
+
+    // Determine direction based on touch position
+    if (x < canvas.width / 2 && y < canvas.height / 2) {
+        direction = "UP";
+    } else if (x < canvas.width / 2 && y >= canvas.height / 2) {
+        direction = "DOWN";
+    } else if (x >= canvas.width / 2 && y < canvas.height / 2) {
+        direction = "LEFT";
+    } else if (x >= canvas.width / 2 && y >= canvas.height / 2) {
+        direction = "RIGHT";
+    }
 });
 
 // Start Game
@@ -120,3 +122,36 @@ function gameLoop() {
     drawSnake();
     updateSnake();
 }
+
+// Reset game state
+function resetGame() {
+    snake = [{ x: 200, y: 200 }];
+    direction = "RIGHT";
+    food = {
+        x: Math.floor(Math.random() * (canvas.width / boxSize)) * boxSize,
+        y: Math.floor(Math.random() * (canvas.height / boxSize)) * boxSize,
+    };
+    score = 0;
+    document.getElementById("score").textContent = score;
+}
+
+// Handle game over
+function handleGameOver() {
+    clearInterval(gameInterval);
+    document.getElementById("finalScore").textContent = score;
+    document.querySelector(".game-container").style.display = "none";
+    document.querySelector(".game-over-container").style.display = "flex";
+}
+
+// Play again
+document.getElementById("playAgainButton").addEventListener("click", () => {
+    resetGame();
+    document.querySelector(".game-over-container").style.display = "none";
+    document.querySelector(".game-container").style.display = "block";
+    gameInterval = setInterval(gameLoop, 150);
+});
+
+// Exit game
+document.getElementById("exitButton").addEventListener("click", () => {
+    window.close(); // Exit game or navigate to another page
+});
