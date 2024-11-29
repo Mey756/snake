@@ -105,3 +105,70 @@ canvas {
     transform: scale(0.95);
     background-color: #e6b232;
 }
+
+/* Kontrol untuk perangkat mobile */
+.controls {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.controls-row {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.controls button {
+    background: #ffd369;
+    color: #222831;
+    border: none;
+    border-radius: 5px;
+    padding: 15px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    box-shadow: 0 3px #222831;
+    transition: transform 0.2s;
+}
+
+.controls button:active {
+    transform: scale(0.95);
+    box-shadow: none;
+}
+
+/* Menambahkan responsive agar tombol lebih kecil di layar mobile */
+/* Responsive styles for smaller devices (max-width: 767px) */
+@media (max-width: 767px) {
+    /* Canvas - Mengatur lebar canvas agar lebih kecil */
+    canvas {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    /* Mengatur tampilan scoreboard */
+    .scoreboard {
+        font-size: 14px;
+    }
+
+    /* Mengatur tombol kontrol untuk ponsel */
+    .controls button {
+        padding: 10px 14px; /* Ukuran tombol lebih kecil */
+        font-size: 16px; /* Ukuran font tombol */
+    }
+
+    /* Mengatur tombol arah supaya lebih besar dan responsif */
+    .controls-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    /* Tombol Start Game lebih besar di mobile */
+    .start-button {
+        padding: 12px 24px;
+        font-size: 16px;
+    }
+}
+
