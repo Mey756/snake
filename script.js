@@ -155,3 +155,45 @@ document.getElementById("playAgainButton").addEventListener("click", () => {
 document.getElementById("exitButton").addEventListener("click", () => {
     window.close(); // Exit game or navigate to another page
 });
+
+// Variabel untuk mendeteksi sentuhan layar
+let touchStartX = 0;
+let touchStartY = 0;
+
+// Menangani sentuhan layar
+canvas.addEventListener("touchstart", (e) => {
+    // Mencegah scroll ketika bermain
+    e.preventDefault();
+
+    const touch = e.touches[0]; // Ambil posisi sentuhan pertama
+    touchStartX = touch.pageX;
+    touchStartY = touch.pageY;
+});
+
+// Menangani gerakan sentuhan untuk mengubah arah ular
+canvas.addEventListener("touchmove", (e) => {
+    e.preventDefault();
+
+    const touch = e.touches[0]; // Ambil posisi sentuhan pertama
+    const diffX = touch.pageX - touchStartX;
+    const diffY = touch.pageY - touchStartY;
+
+    // Menentukan arah berdasarkan perbedaan posisi sentuhan
+    if (Math.abs(diffX) > Math.abs(diffY)) {
+        if (diffX > 0 && direction !== "LEFT") {
+            direction = "RIGHT";
+        } else if (diffX < 0 && direction !== "RIGHT") {
+            direction = "LEFT";
+        }
+    } else {
+        if (diffY > 0 && direction !== "UP") {
+            direction = "DOWN";
+        } else if (diffY < 0 && direction !== "DOWN") {
+            direction = "UP";
+        }
+    }
+
+    // Update posisi awal untuk sentuhan berikutnya
+    touchStartX = touch.pageX;
+    touchStartY = touch.pageY;
+});
