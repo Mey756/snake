@@ -1,21 +1,19 @@
 /* General styles */
 body {
     margin: 0;
-    display: flex; /* Menggunakan flexbox */
-    justify-content: center; /* Menempatkan secara horizontal */
-    align-items: center; /* Menempatkan secara vertikal */
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 100vh;
     background-color: #222831;
     color: white;
     font-family: 'Arial', sans-serif;
 }
 
-
 .game-container {
     text-align: center;
     width: 90%;
     max-width: 450px;
-    /* Hilangkan margin otomatis karena sudah diatur di body */
 }
 
 h1 {
@@ -60,75 +58,50 @@ canvas {
     box-shadow: none;
 }
 
-/* Controls for touch devices */
-.controls {
-    margin-top: 20px;
+/* Game Over Container */
+.game-over-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 10px;
-}
-
-.controls-row {
-    display: flex;
     justify-content: center;
-    gap: 10px;
+    align-items: center;
+    height: 100vh;
+    background-color: #222831;
+    color: white;
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    padding: 20px;
 }
 
-.controls button {
-    background: #ffd369;
+.game-over-container h2 {
+    font-size: 36px;
+    color: #ff4747;
+    margin-bottom: 20px;
+}
+
+.game-over-container p {
+    font-size: 20px;
+    color: #ffd369;
+    margin-bottom: 30px;
+}
+
+.game-over-container button {
+    background-color: #ffd369;
     color: #222831;
     border: none;
-    border-radius: 5px;
-    padding: 15px 20px;
+    border-radius: 10px;
+    padding: 15px 30px;
     font-size: 18px;
+    font-weight: bold;
     cursor: pointer;
-    box-shadow: 0 3px #222831;
-    transition: transform 0.2s;
+    margin: 10px;
+    transition: transform 0.2s, background-color 0.3s;
 }
 
-.controls button:active {
+.game-over-container button:hover {
+    background-color: #f0c14b;
+}
+
+.game-over-container button:active {
     transform: scale(0.95);
-    box-shadow: none;
-}
-
-/* Responsive styles */
-@media (max-width: 1199px) {
-    canvas {
-        width: 65%;
-        max-width: 100%; /* Ensure canvas fits */
-    }
-    .scoreboard {
-        font-size: 16px;
-    }
-    .controls button {
-        padding: 12px 16px;
-        font-size: 16px;
-    }
-}
-
-@media (max-width: 991px) {
-    canvas {
-        width: 80%;
-    }
-    .scoreboard {
-        font-size: 14px;
-    }
-    .controls button {
-        padding: 10px 14px;
-        font-size: 14px;
-    }
-}
-
-@media (max-width: 767px) {
-    canvas {
-        width: 100%;
-    }
-    .scoreboard {
-        font-size: 14px;
-    }
-    .controls button {
-        padding: 8px 12px;
-        font-size: 14px;
-    }
+    background-color: #e6b232;
 }
