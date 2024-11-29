@@ -170,30 +170,26 @@ canvas.addEventListener("touchstart", (e) => {
     touchStartY = touch.pageY;
 });
 
-// Menangani gerakan sentuhan untuk mengubah arah ular
-canvas.addEventListener("touchmove", (e) => {
-    e.preventDefault();
 
-    const touch = e.touches[0]; // Ambil posisi sentuhan pertama
-    const diffX = touch.pageX - touchStartX;
-    const diffY = touch.pageY - touchStartY;
-
-    // Menentukan arah berdasarkan perbedaan posisi sentuhan
-    if (Math.abs(diffX) > Math.abs(diffY)) {
-        if (diffX > 0 && direction !== "LEFT") {
-            direction = "RIGHT";
-        } else if (diffX < 0 && direction !== "RIGHT") {
-            direction = "LEFT";
-        }
-    } else {
-        if (diffY > 0 && direction !== "UP") {
-            direction = "DOWN";
-        } else if (diffY < 0 && direction !== "DOWN") {
-            direction = "UP";
-        }
-    }
-
-    // Update posisi awal untuk sentuhan berikutnya
-    touchStartX = touch.pageX;
-    touchStartY = touch.pageY;
+// Handle input
+document.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowUp" && direction !== "DOWN") direction = "UP";
+    if (e.key === "ArrowDown" && direction !== "UP") direction = "DOWN";
+    if (e.key === "ArrowLeft" && direction !== "RIGHT") direction = "LEFT";
+    if (e.key === "ArrowRight" && direction !== "LEFT") direction = "RIGHT";
 });
+
+// Handle touch control (previously for mobile)
+document.getElementById("up").addEventListener("click", () => {
+    if (direction !== "DOWN") direction = "UP";
+});
+document.getElementById("down").addEventListener("click", () => {
+    if (direction !== "UP") direction = "DOWN";
+});
+document.getElementById("left").addEventListener("click", () => {
+    if (direction !== "RIGHT") direction = "LEFT";
+});
+document.getElementById("right").addEventListener("click", () => {
+    if (direction !== "LEFT") direction = "RIGHT";
+});
+
